@@ -74,6 +74,8 @@ driver.quit()
 df_paletas_padel_usa = df_paletas_padel_usa.drop_duplicates()
 df_paletas_padel_usa['Precio']=df_paletas_padel_usa['Precio'].str.replace('$','')
 df_paletas_padel_usa=df_paletas_padel_usa.reset_index(drop=True)
+df_paletas_padel_usa['Nombre'] = df_paletas_padel_usa['Nombre'].str.replace('\s+', ' ', regex=True)
+df_paletas_padel_usa['Nombre'] = df_paletas_padel_usa['Nombre'].str.replace(r'\b(\w+)\b\s+\1\b', r'\1', regex=True)
 df_paletas_padel_usa.to_excel('padel_usa.xlsx')
 print(df_paletas_padel_usa)
 
