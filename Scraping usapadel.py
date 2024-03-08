@@ -11,9 +11,32 @@ import pandas as pd
 import time
 #%%
 driver= webdriver.Chrome()
-url="https://padelusa.com/collections/padel-rackets"
-driver.get(url)
+driver.get("https://padelusa.com/collections/padel-rackets")
 driver.implicitly_wait(1)
+# Obtener la altura de la página
+page_height = driver.execute_script("return document.body.scrollHeight")
+# Scroll hasta la mitad de la página
+driver.execute_script("window.scrollTo(0, %d);" % (page_height*4 / 6))
+# Esperar a que carguen los elementos
+time.sleep(4)
+# Obtener la altura de la página
+page_height = driver.execute_script("return document.body.scrollHeight")
+# Scroll hasta la mitad de la página
+driver.execute_script("window.scrollTo(0, %d);" % (page_height*5 / 6))
+# Esperar a que carguen los elementos
+time.sleep(4)
+# Obtener la altura de la página
+page_height = driver.execute_script("return document.body.scrollHeight")
+# Scroll hasta la mitad de la página
+driver.execute_script("window.scrollTo(0, %d);" % (page_height*5 / 6))
+# Esperar a que carguen los elementos
+time.sleep(4)
+# Obtener la altura de la página
+page_height = driver.execute_script("return document.body.scrollHeight")
+# Scroll hasta la mitad de la página
+driver.execute_script("window.scrollTo(0, %d);" % (page_height*5 / 6))
+# Esperar a que carguen los elementos
+time.sleep(4)
 htlm= driver.page_source
 soup= bs(htlm,'lxml')
 articulos= soup.find('ul',{'id':'product-grid'}).find_all('a')
@@ -27,8 +50,7 @@ def scrapear_paletas (id_paletas):
     soup= bs(htlm,'lxml')
     nombre= soup.find('div',{'class':'product__title'}).text
     #print('\n nombre:'+ nombre)
-    precio= soup.find('span',
-                      {'class':'price-item price-item--sale price-item--last'}).text.replace('.',',')
+    precio= soup.find('span',{'class':'price-item price-item--sale price-item--last'}).text.replace('.',',')
     #print('\n precio:'+ precio)
     marca=soup.find('a',{'class':'product__text inline-richtext vendor'}).text
     #print('\n marca:'+ marca)
@@ -47,9 +69,11 @@ for index, row in id_paletas.iterrows():
     df_paletas_padel_usa = pd.concat(
         [df_paletas_padel_usa, scrapear_paletas(row['id'])]
     )
-
+driver.quit()
 #%%
-print(df_paletas_padel_usa)
 df_paletas_padel_usa = df_paletas_padel_usa.drop_duplicates()
 df_paletas_padel_usa['Precio']=df_paletas_padel_usa['Precio'].str.replace('$','')
 df_paletas_padel_usa.to_excel('padel_usa.xlsx')
+print(df_paletas_padel_usa)
+
+# %%
