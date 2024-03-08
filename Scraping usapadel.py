@@ -73,6 +73,7 @@ driver.quit()
 #%%
 df_paletas_padel_usa = df_paletas_padel_usa.drop_duplicates()
 df_paletas_padel_usa['Precio']=df_paletas_padel_usa['Precio'].str.replace('$','')
+df_paletas_padel_usa=df_paletas_padel_usa.reset_index(drop=True)
 df_paletas_padel_usa.to_excel('padel_usa.xlsx')
 print(df_paletas_padel_usa)
 
